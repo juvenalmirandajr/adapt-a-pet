@@ -4,4 +4,4 @@ CREATE TABLE pet_types(
     description VARCHAR(255)
 );
 
-CREATE UNIQUE INDEX index ON pet_types(type);
+CREATE UNIQUE INDEX idx_pet_types_type ON pet_types(type);

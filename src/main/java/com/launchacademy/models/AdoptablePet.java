@@ -40,7 +40,7 @@ public class AdoptablePet {
     @Column(name = "adoption_status")
     private String adoptionStatus;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "pet_type_id", nullable = false)
     private PetType petType;
 }

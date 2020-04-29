@@ -5,4 +5,4 @@ CREATE TABLE admin_table (
     password VARCHAR(50) NOT NULL
 );
 
-CREATE UNIQUE INDEX index ON admin_table(name);
+CREATE UNIQUE INDEX idx_admin_table_name ON admin_table(name);

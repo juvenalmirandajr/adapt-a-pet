@@ -11,4 +11,4 @@ CREATE TABLE pet_surrender_applications (
     application_status VARCHAR(255) NOT NULL
 );
 
-CREATE UNIQUE INDEX index ON pet_surrender_applications(name);
+CREATE UNIQUE INDEX idx_pet_surrender_applications_name ON pet_surrender_applications(name);

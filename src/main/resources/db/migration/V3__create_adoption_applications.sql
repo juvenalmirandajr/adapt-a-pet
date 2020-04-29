@@ -8,4 +8,4 @@ CREATE TABLE adoption_applications (
     pet_id INTEGER REFERENCES adoptable_pets(id) NOT NULL
 );
 
-CREATE UNIQUE INDEX index ON adoption_applications(name);
+CREATE UNIQUE INDEX idx_adoption_applications_name ON adoption_applications(name);
