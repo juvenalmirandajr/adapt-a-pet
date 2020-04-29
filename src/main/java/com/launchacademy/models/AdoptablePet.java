@@ -1,5 +1,6 @@
 package com.launchacademy.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.URL;
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @Entity
 @Table(name = "adoptable_pets")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class AdoptablePet {
     @Id
     @SequenceGenerator(name = "adoptable_pets_generator", sequenceName = "adoptable_pets_id_seq", allocationSize = 1)
@@ -42,7 +44,12 @@ public class AdoptablePet {
     @Column(name = "adoption_status")
     private String adoptionStatus;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pet_type_id", nullable = false)
+    @JsonIgnoreProperties("adoptablePets")
     private PetType petType;
+
+    @OneToOne(mappedBy = "adoptablePet")
+    @JsonIgnoreProperties("adoptablePets")
+    private AdoptionApplication adoptionApplication;
 }

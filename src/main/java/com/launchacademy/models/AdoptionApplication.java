@@ -1,5 +1,6 @@
 package com.launchacademy.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import javax.validation.constraints.Pattern;
 @Data
 @Entity
 @Table(name = "adoption_applications")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class AdoptionApplication {
     @Id
     @SequenceGenerator(name = "adoption_applications_generator", sequenceName = "adoption_applications_id_seq", allocationSize = 1)
@@ -42,5 +44,6 @@ public class AdoptionApplication {
 
     @OneToOne
     @JoinColumn(name = "pet_id", nullable = false)
+    @JsonIgnoreProperties("adoptionApplication")
     private AdoptablePet adoptablePet;
 }

@@ -3,44 +3,20 @@ package com.launchacademy.seeders;
 import com.launchacademy.models.*;
 import com.launchacademy.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AdoptablePetSeeder implements CommandLineRunner {
+public class AdoptablePetSeeder {
     private final AdoptablePetRepository adoptablePetRepo;
     private final PetTypeRepository petTypeRepo;
-    private final AdoptionApplicationRepository adoptionApplicationRepo;
-    private final SurrenderApplicationRepository surrenderApplicationRepo;
-    private final AdminRepository adminRepo;
 
     @Autowired
-    public AdoptablePetSeeder(AdoptablePetRepository adoptablePetRepo,
-                              PetTypeRepository petTypeRepo,
-                              AdoptionApplicationRepository adoptionApplicationRepo,
-                              SurrenderApplicationRepository surrenderApplicationRepo,
-                              AdminRepository adminRepo) {
+    public AdoptablePetSeeder(AdoptablePetRepository adoptablePetRepo, PetTypeRepository petTypeRepo) {
         this.adoptablePetRepo = adoptablePetRepo;
         this.petTypeRepo = petTypeRepo;
-        this.adoptionApplicationRepo = adoptionApplicationRepo;
-        this.surrenderApplicationRepo = surrenderApplicationRepo;
-        this.adminRepo = adminRepo;
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-        if (petTypeRepo.count() == 0) {
-            PetType guinea = new PetType();
-            guinea.setType("guinea pig");
-            guinea.setDescription("Domesticated rodent");
-            petTypeRepo.save(guinea);
-
-            PetType reptile = new PetType();
-            reptile.setType("reptile");
-            reptile.setDescription("Domesticated questionable enemy");
-            petTypeRepo.save(reptile);
-        }
-
+    public void seed() {
         if (adoptablePetRepo.count() == 0) {
             AdoptablePet adoptablePet = new AdoptablePet();
             adoptablePet.setName("Helena");
@@ -101,78 +77,106 @@ public class AdoptablePetSeeder implements CommandLineRunner {
             adoptablePet.setAdoptionStatus("Pending");
             adoptablePet.setPetType(petTypeRepo.findById(1).orElse(new PetType()));
             adoptablePetRepo.save(adoptablePet);
-        }
 
-        if (surrenderApplicationRepo.count() == 0) {
-            SurrenderApplication surrenderApp = new SurrenderApplication();
-            surrenderApp.setName("John");
-            surrenderApp.setPhoneNumber("617-882-5647");
-            surrenderApp.setEmail("johnm@gmail.com");
-            surrenderApp.setPetName("Bob");
-            surrenderApp.setPetAge(2);
-            surrenderApp.setPetType(petTypeRepo.findById(2).orElse(new PetType()));
-            surrenderApp.setImgUrl("https://1.bp.blogspot.com/-8kABMMyDw_E/UCeYS-CqiRI/AAAAAAAAEmI/09PDWJEOToM/s1600/hd-snake-wallpaper-with-a-attacking-green-snake-wallpapers-backgrounds.jpg");
-            surrenderApp.setVaccinationStatus(false);
-            surrenderApp.setApplicationStatus("Pending");
-            surrenderApplicationRepo.save(surrenderApp);
+            adoptablePet = new AdoptablePet();
+            adoptablePet.setName("Dino");
+            adoptablePet.setImgUrl("https://www.zillarules.com/-/media/images/zilla-na/us/blog-articles/myths-facts-about-bearded-dragon-care/bearded-dragon.jpg?h=350&w=350&la=en&hash=BB45C333590D6C0AF6E426FC419D6A3B224212BE");
+            adoptablePet.setAge(3);
+            adoptablePet.setVaccinationStatus(true);
+            adoptablePet.setAdoptionStory("Great lizard just looking to play.");
+            adoptablePet.setAdoptionStatus("Pending");
+            adoptablePet.setPetType(petTypeRepo.findById(2).orElse(new PetType()));
+            adoptablePetRepo.save(adoptablePet);
 
-            surrenderApp = new SurrenderApplication();
-            surrenderApp.setName("Jessica");
-            surrenderApp.setPhoneNumber("617-784-3921");
-            surrenderApp.setEmail("jmatos@gmail.com");
-            surrenderApp.setPetName("Tom");
-            surrenderApp.setPetAge(8);
-            surrenderApp.setPetType(petTypeRepo.findById(1).orElse(new PetType()));
-            surrenderApp.setImgUrl("https://animals.sandiegozoo.org/sites/default/files/2019-04/animals_guineapigs.jpg");
-            surrenderApp.setVaccinationStatus(true);
-            surrenderApp.setApplicationStatus("Pending");
-            surrenderApplicationRepo.save(surrenderApp);
-        }
+            adoptablePet = new AdoptablePet();
+            adoptablePet.setName("Nibbles");
+            adoptablePet.setImgUrl("https://storage.needpix.com/rsynced_images/guinea-pig-850563_1280.jpg");
+            adoptablePet.setAge(1);
+            adoptablePet.setVaccinationStatus(true);
+            adoptablePet.setAdoptionStory("He will chew everything, right into your heart.");
+            adoptablePet.setAdoptionStatus("Pending");
+            adoptablePet.setPetType(petTypeRepo.findById(1).orElse(new PetType()));
+            adoptablePetRepo.save(adoptablePet);
 
-        if (adoptionApplicationRepo.count() == 0) {
-            AdoptionApplication adoptionApp =  new AdoptionApplication();
-            adoptionApp.setName("Robert");
-            adoptionApp.setPhoneNumber("617-896-4573");
-            adoptionApp.setEmail("robertm@gmail.com");
-            adoptionApp.setHomeStatus("Rent");
-            adoptionApp.setApplicationStatus("Pending");
-            adoptionApp.setAdoptablePet(adoptablePetRepo.findById(1).orElse(new AdoptablePet()));
-            adoptionApplicationRepo.save(adoptionApp);
+            adoptablePet = new AdoptablePet();
+            adoptablePet.setName("Sharkeisha");
+            adoptablePet.setImgUrl("https://i.pinimg.com/236x/33/a2/ee/33a2ee6acf44268d81d9021a654f06e0.jpg");
+            adoptablePet.setAge(2);
+            adoptablePet.setVaccinationStatus(false);
+            adoptablePet.setAdoptionStory("Baby Shark doo doo doo doo dooo, also likes lettuce.");
+            adoptablePet.setAdoptionStatus("Pending");
+            adoptablePet.setPetType(petTypeRepo.findById(1).orElse(new PetType()));
+            adoptablePetRepo.save(adoptablePet);
 
-            adoptionApp =  new AdoptionApplication();
-            adoptionApp.setName("Erica");
-            adoptionApp.setPhoneNumber("617-390-2820");
-            adoptionApp.setEmail("esmith@gmail.com");
-            adoptionApp.setHomeStatus("Own");
-            adoptionApp.setApplicationStatus("Pending");
-            adoptionApp.setAdoptablePet(adoptablePetRepo.findById(3).orElse(new AdoptablePet()));
-            adoptionApplicationRepo.save(adoptionApp);
+            adoptablePet = new AdoptablePet();
+            adoptablePet.setName("ChamWow");
+            adoptablePet.setImgUrl("https://www.cbreptile.com/wp-content/uploads/2017/08/ambilobe-panther-chameleon-breeder.jpg");
+            adoptablePet.setAge(4);
+            adoptablePet.setVaccinationStatus(true);
+            adoptablePet.setAdoptionStory("Will do what he needs to do to change. Just for you.");
+            adoptablePet.setAdoptionStatus("Pending");
+            adoptablePet.setPetType(petTypeRepo.findById(2).orElse(new PetType()));
+            adoptablePetRepo.save(adoptablePet);
 
-            adoptionApp =  new AdoptionApplication();
-            adoptionApp.setName("Franklin");
-            adoptionApp.setPhoneNumber("617-893-0298");
-            adoptionApp.setEmail("franklinj@gmail.com");
-            adoptionApp.setHomeStatus("Rent");
-            adoptionApp.setApplicationStatus("Pending");
-            adoptionApp.setAdoptablePet(adoptablePetRepo.findById(2).orElse(new AdoptablePet()));
-            adoptionApplicationRepo.save(adoptionApp);
+            adoptablePet = new AdoptablePet();
+            adoptablePet.setName("Brownies");
+            adoptablePet.setImgUrl("https://i.pinimg.com/originals/4d/b4/06/4db406f8c896c14f2a0dfa64e2744e79.jpg");
+            adoptablePet.setAge(5);
+            adoptablePet.setVaccinationStatus(false);
+            adoptablePet.setAdoptionStory("Loves mice! Not for friends or play play though.");
+            adoptablePet.setAdoptionStatus("Pending");
+            adoptablePet.setPetType(petTypeRepo.findById(2).orElse(new PetType()));
+            adoptablePetRepo.save(adoptablePet);
 
-            adoptionApp =  new AdoptionApplication();
-            adoptionApp.setName("Nancy");
-            adoptionApp.setPhoneNumber("617-209-7654");
-            adoptionApp.setEmail("nlee@gmail.com");
-            adoptionApp.setHomeStatus("Rent");
-            adoptionApp.setApplicationStatus("Pending");
-            adoptionApp.setAdoptablePet(adoptablePetRepo.findById(4).orElse(new AdoptablePet()));
-            adoptionApplicationRepo.save(adoptionApp);
-        }
+            adoptablePet = new AdoptablePet();
+            adoptablePet.setName("Napsy");
+            adoptablePet.setImgUrl("https://media.giphy.com/media/ZLF9Loju0q3MA/giphy.gif");
+            adoptablePet.setAge(3);
+            adoptablePet.setVaccinationStatus(false);
+            adoptablePet.setAdoptionStory("You will see her in your dreams.");
+            adoptablePet.setAdoptionStatus("Pending");
+            adoptablePet.setPetType(petTypeRepo.findById(2).orElse(new PetType()));
+            adoptablePetRepo.save(adoptablePet);
 
-        if (adminRepo.count() == 0) {
-            Admin admin = new Admin();
-            admin.setName("Lucas Green");
-            admin.setUsername("root");
-            admin.setPassword("root");
-            adminRepo.save(admin);
+            adoptablePet = new AdoptablePet();
+            adoptablePet.setName("Connakry");
+            adoptablePet.setImgUrl("https://media1.giphy.com/media/9ryDmaTgXFc90a6fah/giphy.gif");
+            adoptablePet.setAge(1);
+            adoptablePet.setVaccinationStatus(false);
+            adoptablePet.setAdoptionStory("Ready or not here I come. Oh there you are hiding!! Likes to existentially think of life.");
+            adoptablePet.setAdoptionStatus("Pending");
+            adoptablePet.setPetType(petTypeRepo.findById(1).orElse(new PetType()));
+            adoptablePetRepo.save(adoptablePet);
+
+            adoptablePet = new AdoptablePet();
+            adoptablePet.setName("Orange Fanta");
+            adoptablePet.setImgUrl("https://cdn.pixabay.com/photo/2014/10/22/19/21/guinea-pig-498824__340.jpg");
+            adoptablePet.setAge(3);
+            adoptablePet.setVaccinationStatus(false);
+            adoptablePet.setAdoptionStory("Loves carrots and will love you too.");
+            adoptablePet.setAdoptionStatus("Pending");
+            adoptablePet.setPetType(petTypeRepo.findById(1).orElse(new PetType()));
+            adoptablePetRepo.save(adoptablePet);
+
+            adoptablePet = new AdoptablePet();
+            adoptablePet.setName("Megan Thee Guinea Pig");
+            adoptablePet.setImgUrl("https://merryabouttown.com/wp-content/uploads/2019/04/guinea-pig-1325841_1280.jpg");
+            adoptablePet.setAge(15);
+            adoptablePet.setVaccinationStatus(false);
+            adoptablePet.setAdoptionStory("She got him swerving and breaking the law These windows tinted so nobody saw.");
+            adoptablePet.setAdoptionStatus("Pending");
+            adoptablePet.setPetType(petTypeRepo.findById(1).orElse(new PetType()));
+            adoptablePetRepo.save(adoptablePet);
+
+            adoptablePet = new AdoptablePet();
+            adoptablePet.setName("Boxy Brown");
+            adoptablePet.setImgUrl("https://farm2.staticflickr.com/1889/43040326120_715b221842_b.jpg");
+            adoptablePet.setAge(10);
+            adoptablePet.setVaccinationStatus(false);
+            adoptablePet.setAdoptionStory("Love lettuce, walking, and beating up the man you jive turkey.");
+            adoptablePet.setAdoptionStatus("Pending");
+            adoptablePet.setPetType(petTypeRepo.findById(2).orElse(new PetType()));
+            adoptablePetRepo.save(adoptablePet);
         }
     }
 }
