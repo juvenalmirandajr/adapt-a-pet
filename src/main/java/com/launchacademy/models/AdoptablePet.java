@@ -1,6 +1,7 @@
 package com.launchacademy.models;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
@@ -26,6 +27,7 @@ public class AdoptablePet {
     @Column(name = "img_url")
     private String imgUrl;
 
+    @Range(min = 1, max = 999)
     @Column
     private Integer age;
 

@@ -1,6 +1,7 @@
 package com.launchacademy.models;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
@@ -37,6 +38,7 @@ public class SurrenderApplication {
     @Column(name = "pet_name")
     private String petName;
 
+    @Range(min = 1, max = 999)
     @Column(name = "pet_age")
     private Integer petAge;
 
