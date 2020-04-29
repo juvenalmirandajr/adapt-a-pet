@@ -1,13 +1,7 @@
 package com.launchacademy.seeders;
 
-import com.launchacademy.models.AdoptablePet;
-import com.launchacademy.models.AdoptionApplication;
-import com.launchacademy.models.PetType;
-import com.launchacademy.models.SurrenderApplication;
-import com.launchacademy.repositories.AdoptablePetRepository;
-import com.launchacademy.repositories.AdoptionApplicationRepository;
-import com.launchacademy.repositories.PetTypeRepository;
-import com.launchacademy.repositories.SurrenderApplicationRepository;
+import com.launchacademy.models.*;
+import com.launchacademy.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -18,16 +12,19 @@ public class AdoptablePetSeeder implements CommandLineRunner {
     private final PetTypeRepository petTypeRepo;
     private final AdoptionApplicationRepository adoptionApplicationRepo;
     private final SurrenderApplicationRepository surrenderApplicationRepo;
+    private final AdminRepository adminRepo;
 
     @Autowired
     public AdoptablePetSeeder(AdoptablePetRepository adoptablePetRepo,
                               PetTypeRepository petTypeRepo,
                               AdoptionApplicationRepository adoptionApplicationRepo,
-                              SurrenderApplicationRepository surrenderApplicationRepo) {
+                              SurrenderApplicationRepository surrenderApplicationRepo,
+                              AdminRepository adminRepo) {
         this.adoptablePetRepo = adoptablePetRepo;
         this.petTypeRepo = petTypeRepo;
         this.adoptionApplicationRepo = adoptionApplicationRepo;
         this.surrenderApplicationRepo = surrenderApplicationRepo;
+        this.adminRepo = adminRepo;
     }
 
     @Override
@@ -168,6 +165,14 @@ public class AdoptablePetSeeder implements CommandLineRunner {
             adoptionApp.setApplicationStatus("Pending");
             adoptionApp.setAdoptablePet(adoptablePetRepo.findById(4).orElse(new AdoptablePet()));
             adoptionApplicationRepo.save(adoptionApp);
+        }
+
+        if (adminRepo.count() == 0) {
+            Admin admin = new Admin();
+            admin.setName("Lucas Green");
+            admin.setUsername("root");
+            admin.setPassword("root");
+            adminRepo.save(admin);
         }
     }
 }
