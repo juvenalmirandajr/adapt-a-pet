@@ -23,10 +23,10 @@ public class SurrenderApplication {
     @Column
     private String name;
 
-    @NotNull
+    @NotBlank
     @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message = "Invalid phone number")
     @Column(name = "phone_number")
-    private Integer phoneNumber;
+    private String phoneNumber;
 
     @Email
     @NotBlank
@@ -38,9 +38,9 @@ public class SurrenderApplication {
     private String petName;
 
     @Column(name = "pet_age")
-    private Integer age;
+    private Integer petAge;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "pet_type_id", nullable = false)
     private PetType petType;
 

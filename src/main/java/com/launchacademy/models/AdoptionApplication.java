@@ -22,10 +22,10 @@ public class AdoptionApplication {
     @Column
     private String name;
 
-    @NotNull
+    @NotBlank
     @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message = "Invalid phone number")
     @Column(name = "phone_number")
-    private Integer phoneNumber;
+    private String phoneNumber;
 
     @Email
     @NotBlank
