@@ -71,4 +71,13 @@ public class ReactService {
     public AdoptablePetDto findById(Integer id) {
         return mapper.adoptablePetToAdoptablePetDto(adoptablePetRepository.findById(id).get());
     }
+
+    public AdoptionApplicationFormDto newAdoptionApplication(AdoptionApplicationFormDto applicationFormDto) {
+        AdoptionApplication adoptionApplication = mapper.adoptionApplicationFormDtoToAdoptionApplication(applicationFormDto);
+        AdoptablePet pet = adoptablePetRepository.findById(applicationFormDto.getPetId()).get();
+        adoptionApplication.setAdoptablePet(pet);
+        adoptionApplicationRepository.save(adoptionApplication);
+        return applicationFormDto;
+    }
 }
+
