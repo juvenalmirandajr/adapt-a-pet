@@ -47,7 +47,7 @@ public class ReactService {
         return list;
     }
 
-    public List<AdoptionApplicationDto> findAll() {
+    public List<AdoptionApplicationDto> findAllAdoption() {
         List<AdoptionApplicationDto> list = new ArrayList<>();
         List<AdoptionApplication> all = (List<AdoptionApplication>) adoptionApplicationRepository.findAll();
         return mapper.adoptionApplicationsToAdoptionApplicationDtos(all);

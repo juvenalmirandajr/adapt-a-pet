@@ -24,6 +24,6 @@ public class AdoptionApplicationRestApiController {
 
     @GetMapping
     List<AdoptionApplicationDto> all() {
-        return reactService.findAll();
+        return reactService.findAllAdoption();
     }
 }
