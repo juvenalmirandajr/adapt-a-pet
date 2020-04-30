@@ -1,6 +1,7 @@
 package com.launchacademy.services;
 
 import com.launchacademy.dtos.AdoptionApplicationDto;
+import com.launchacademy.dtos.ListPageContainerDto;
 import com.launchacademy.dtos.SurrenderApplicationDto;
 import com.launchacademy.dtos.TypeContainerDto;
 import com.launchacademy.mappers.ReactMapper;
@@ -56,5 +57,17 @@ public class ReactService {
     public List<SurrenderApplicationDto> findAllSurrender() {
         List<SurrenderApplication> all = (List<SurrenderApplication>) surrenderApplicationRepository.findAll();
         return mapper.surrenderApplicationsToSurrenderApplicationDtos(all);
+    }
+
+    public List<ListPageContainerDto> findByPetType(String petType) {
+        PetType result = null;
+        for (PetType type : petTypeRepository.findAll()) {
+            if (type.getType().contains(petType.toLowerCase())) {
+                result = type;
+            }
+        }
+        return result == null
+                ? new ArrayList<ListPageContainerDto>()
+                : mapper.adoptablePetsToListPageContainerDtos(adoptablePetRepository.findByPetType(result));
     }
 }
