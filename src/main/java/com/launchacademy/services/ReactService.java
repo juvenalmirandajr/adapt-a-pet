@@ -1,9 +1,6 @@
 package com.launchacademy.services;
 
-import com.launchacademy.dtos.AdoptionApplicationDto;
-import com.launchacademy.dtos.ListPageContainerDto;
-import com.launchacademy.dtos.SurrenderApplicationDto;
-import com.launchacademy.dtos.TypeContainerDto;
+import com.launchacademy.dtos.*;
 import com.launchacademy.mappers.ReactMapper;
 import com.launchacademy.models.AdoptablePet;
 import com.launchacademy.models.AdoptionApplication;
@@ -59,7 +56,7 @@ public class ReactService {
         return mapper.surrenderApplicationsToSurrenderApplicationDtos(all);
     }
 
-    public List<ListPageContainerDto> findByPetType(String petType) {
+    public List<AdoptablePetDto> findByPetType(String petType) {
         PetType result = null;
         for (PetType type : petTypeRepository.findAll()) {
             if (type.getType().contains(petType.toLowerCase())) {
@@ -67,7 +64,11 @@ public class ReactService {
             }
         }
         return result == null
-                ? new ArrayList<ListPageContainerDto>()
-                : mapper.adoptablePetsToListPageContainerDtos(adoptablePetRepository.findByPetType(result));
+                ? new ArrayList<AdoptablePetDto>()
+                : mapper.adoptablePetsToAdoptablePetDtos(adoptablePetRepository.findByPetType(result));
+    }
+
+    public AdoptablePetDto findById(Integer id) {
+        return mapper.adoptablePetToAdoptablePetDto(adoptablePetRepository.findById(id).get());
     }
 }

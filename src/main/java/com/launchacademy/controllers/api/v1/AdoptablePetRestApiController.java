@@ -1,6 +1,6 @@
 package com.launchacademy.controllers.api.v1;
 
-import com.launchacademy.dtos.ListPageContainerDto;
+import com.launchacademy.dtos.AdoptablePetDto;
 import com.launchacademy.dtos.TypeContainerDto;
 import com.launchacademy.models.AdoptablePet;
 import com.launchacademy.repositories.AdoptablePetRepository;
@@ -36,14 +36,14 @@ public class AdoptablePetRestApiController {
     }
 
     @GetMapping("type/{petType}")
-    public List<ListPageContainerDto> findByPetType(@PathVariable String petType) {
+    public List<AdoptablePetDto> findByPetType(@PathVariable String petType) {
         return reactService.findByPetType(petType);
     }
 
 
     @GetMapping("/{id}")
-    public AdoptablePet one(@PathVariable Integer id) {
-        return repository.findById(id).get();
+    public AdoptablePetDto one(@PathVariable Integer id) {
+        return reactService.findById(id);
     }
 
     @PostMapping

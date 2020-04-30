@@ -3,7 +3,7 @@ package com.launchacademy.dtos;
 import lombok.Data;
 
 @Data
-public class ListPageContainerDto {
+public class AdoptablePetDto {
     private Integer id;
     private String name;
     private String img_url;
