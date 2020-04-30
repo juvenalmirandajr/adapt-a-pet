@@ -1,7 +1,7 @@
 package com.launchacademy.controllers.api.v1;
 
 import com.launchacademy.dtos.AdoptionApplicationDto;
-import com.launchacademy.repositories.AdoptionApplicationRepository;
+import com.launchacademy.dtos.SurrenderApplicationDto;
 import com.launchacademy.services.ReactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,19 +11,18 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/adoptionApplications")
-public class AdoptionApplicationRestApiController {
+@RequestMapping("/api/v1/surrenderApplications")
+public class SurrenderApplicationRestApiController {
+
     private final ReactService reactService;
-    private final AdoptionApplicationRepository repository;
 
     @Autowired
-    public AdoptionApplicationRestApiController(ReactService reactService, AdoptionApplicationRepository repository) {
+    public SurrenderApplicationRestApiController(ReactService reactService) {
         this.reactService = reactService;
-        this.repository = repository;
     }
 
     @GetMapping
-    List<AdoptionApplicationDto> all() {
-        return reactService.findAllAdoption();
+    List<SurrenderApplicationDto> all() {
+        return reactService.findAllSurrender();
     }
 }

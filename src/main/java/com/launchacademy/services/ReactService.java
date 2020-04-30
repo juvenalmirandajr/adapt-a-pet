@@ -1,14 +1,17 @@
 package com.launchacademy.services;
 
 import com.launchacademy.dtos.AdoptionApplicationDto;
+import com.launchacademy.dtos.SurrenderApplicationDto;
 import com.launchacademy.dtos.TypeContainerDto;
 import com.launchacademy.mappers.ReactMapper;
 import com.launchacademy.models.AdoptablePet;
 import com.launchacademy.models.AdoptionApplication;
 import com.launchacademy.models.PetType;
+import com.launchacademy.models.SurrenderApplication;
 import com.launchacademy.repositories.AdoptablePetRepository;
 import com.launchacademy.repositories.AdoptionApplicationRepository;
 import com.launchacademy.repositories.PetTypeRepository;
+import com.launchacademy.repositories.SurrenderApplicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +24,15 @@ public class ReactService {
     private final PetTypeRepository petTypeRepository;
     private final AdoptablePetRepository adoptablePetRepository;
     private final AdoptionApplicationRepository adoptionApplicationRepository;
+    private final SurrenderApplicationRepository surrenderApplicationRepository;
 
     @Autowired
-    public ReactService(ReactMapper mapper, PetTypeRepository petTypeRepository, AdoptablePetRepository adoptablePetRepository, AdoptionApplicationRepository adoptionApplicationRepository) {
+    public ReactService(ReactMapper mapper, PetTypeRepository petTypeRepository, AdoptablePetRepository adoptablePetRepository, AdoptionApplicationRepository adoptionApplicationRepository, SurrenderApplicationRepository surrenderApplicationRepository) {
         this.mapper = mapper;
         this.petTypeRepository = petTypeRepository;
         this.adoptablePetRepository = adoptablePetRepository;
         this.adoptionApplicationRepository = adoptionApplicationRepository;
+        this.surrenderApplicationRepository = surrenderApplicationRepository;
     }
 
     public List<TypeContainerDto> findPetType() {
@@ -42,9 +47,14 @@ public class ReactService {
         return list;
     }
 
-    public List<AdoptionApplicationDto> findAll() {
+    public List<AdoptionApplicationDto> findAllAdoption() {
         List<AdoptionApplicationDto> list = new ArrayList<>();
         List<AdoptionApplication> all = (List<AdoptionApplication>) adoptionApplicationRepository.findAll();
         return mapper.adoptionApplicationsToAdoptionApplicationDtos(all);
+    }
+
+    public List<SurrenderApplicationDto> findAllSurrender() {
+        List<SurrenderApplication> all = (List<SurrenderApplication>) surrenderApplicationRepository.findAll();
+        return mapper.surrenderApplicationsToSurrenderApplicationDtos(all);
     }
 }
