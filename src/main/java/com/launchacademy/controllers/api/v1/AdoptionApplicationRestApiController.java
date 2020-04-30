@@ -1,12 +1,11 @@
 package com.launchacademy.controllers.api.v1;
 
 import com.launchacademy.dtos.AdoptionApplicationDto;
+import com.launchacademy.dtos.AdoptionApplicationFormDto;
 import com.launchacademy.repositories.AdoptionApplicationRepository;
 import com.launchacademy.services.ReactService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +24,10 @@ public class AdoptionApplicationRestApiController {
     @GetMapping
     List<AdoptionApplicationDto> all() {
         return reactService.findAllAdoption();
+    }
+
+    @PostMapping
+    AdoptionApplicationFormDto newAdoptionApplication(@RequestBody AdoptionApplicationFormDto applicationFormDto) {
+        return reactService.newAdoptionApplication(applicationFormDto);
     }
 }

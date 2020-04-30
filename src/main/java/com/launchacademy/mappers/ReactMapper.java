@@ -71,5 +71,20 @@ public interface ReactMapper {
     }
 
     List<AdoptablePetDto> adoptablePetsToAdoptablePetDtos(List<AdoptablePet> all);
+
+    default AdoptionApplication adoptionApplicationFormDtoToAdoptionApplication(AdoptionApplicationFormDto dto) {
+        AdoptionApplication adoption = new AdoptionApplication();
+        adoption.setName(dto.getName());
+        adoption.setPhoneNumber(dto.getPhoneNumber());
+        adoption.setEmail(dto.getEmail());
+        adoption.setHomeStatus(dto.getHomeStatus());
+        adoption.setApplicationStatus(dto.getApplicationStatus());
+        AdoptablePet pet = new AdoptablePet();
+        pet.setId(dto.getPetId());
+        adoption.setAdoptablePet(pet);
+        return  adoption;
+    }
+
+    List<AdoptionApplication> adoptionApplicationFormDtosToAdoptionApplications(List<AdoptionApplicationFormDto> all);
 }
 
