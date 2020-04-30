@@ -1,9 +1,11 @@
 package com.launchacademy.mappers;
 
 import com.launchacademy.dtos.AdoptionApplicationDto;
+import com.launchacademy.dtos.SurrenderApplicationDto;
 import com.launchacademy.dtos.TypeContainerDto;
 import com.launchacademy.models.AdoptablePet;
 import com.launchacademy.models.AdoptionApplication;
+import com.launchacademy.models.SurrenderApplication;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 
@@ -39,4 +41,22 @@ public interface ReactMapper {
     }
 
     List<AdoptionApplicationDto> adoptionApplicationsToAdoptionApplicationDtos(List<AdoptionApplication> all);
+
+    default SurrenderApplicationDto surrenderApplicationToSurrenderApplicationDto(SurrenderApplication surrenderApplication){
+        SurrenderApplicationDto dto = new SurrenderApplicationDto();
+        dto.setId(surrenderApplication.getId());
+        dto.setName(surrenderApplication.getName());
+        dto.setPhone_number(surrenderApplication.getPhoneNumber());
+        dto.setEmail(surrenderApplication.getEmail());
+        dto.setPet_name(surrenderApplication.getPetName());
+        dto.setPet_age(surrenderApplication.getPetAge());
+        dto.setPet_type_id(surrenderApplication.getPetType().getId());
+        dto.setPet_img_url(surrenderApplication.getImgUrl());
+        dto.setVaccination_status(surrenderApplication.getVaccinationStatus());
+        dto.setApplication_status(surrenderApplication.getApplicationStatus());
+        return dto;
+    }
+
+    List<SurrenderApplicationDto> surrenderApplicationsToSurrenderApplicationDtos(List<SurrenderApplication> all);
 }
+
