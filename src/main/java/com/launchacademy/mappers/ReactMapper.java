@@ -1,9 +1,6 @@
 package com.launchacademy.mappers;
 
-import com.launchacademy.dtos.AdoptionApplicationDto;
-import com.launchacademy.dtos.ListPageContainerDto;
-import com.launchacademy.dtos.SurrenderApplicationDto;
-import com.launchacademy.dtos.TypeContainerDto;
+import com.launchacademy.dtos.*;
 import com.launchacademy.models.AdoptablePet;
 import com.launchacademy.models.AdoptionApplication;
 import com.launchacademy.models.SurrenderApplication;
@@ -60,8 +57,8 @@ public interface ReactMapper {
 
     List<SurrenderApplicationDto> surrenderApplicationsToSurrenderApplicationDtos(List<SurrenderApplication> all);
 
-    default ListPageContainerDto adoptablePetToListPageContainerDto(AdoptablePet adoptablePet){
-        ListPageContainerDto dto = new ListPageContainerDto();
+    default AdoptablePetDto adoptablePetToAdoptablePetDto(AdoptablePet adoptablePet){
+        AdoptablePetDto dto = new AdoptablePetDto();
         dto.setId(adoptablePet.getId());
         dto.setName(adoptablePet.getName());
         dto.setImg_url(adoptablePet.getImgUrl());
@@ -73,6 +70,6 @@ public interface ReactMapper {
         return dto;
     }
 
-    List<ListPageContainerDto> adoptablePetsToListPageContainerDtos(List<AdoptablePet> all);
+    List<AdoptablePetDto> adoptablePetsToAdoptablePetDtos(List<AdoptablePet> all);
 }
 
