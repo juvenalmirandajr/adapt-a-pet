@@ -1,35 +1,51 @@
 package com.launchacademy.controllers.api.v1;
 
+import com.launchacademy.dtos.TypeContainerDto;
 import com.launchacademy.models.AdoptablePet;
+import com.launchacademy.models.PetType;
 import com.launchacademy.repositories.AdoptablePetRepository;
 import com.launchacademy.repositories.AdoptionApplicationRepository;
+import com.launchacademy.services.ReactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/api/v1/")
-public class AdoptablePetRestApiController {
-    @Autowired
-    private AdoptablePetRepository repository;
-    @Autowired
-    private AdoptionApplicationRepository adoptionRepository;
+import java.util.List;
 
-    @GetMapping("adoptablespets")
+@RestController
+@RequestMapping("/api/v1/pets")
+public class AdoptablePetRestApiController {
+    private final AdoptablePetRepository repository;
+    private final AdoptionApplicationRepository adoptionRepository;
+    private final ReactService reactService;
+
+    @Autowired
+    public AdoptablePetRestApiController(AdoptablePetRepository repository, AdoptionApplicationRepository adoptionRepository, ReactService reactService) {
+        this.repository = repository;
+        this.adoptionRepository = adoptionRepository;
+        this.reactService = reactService;
+    }
+
+    @GetMapping
     Iterable<AdoptablePet> all() {
         return repository.findAll();
     }
 
-    @GetMapping("adoptablespets/{id}")
+    @GetMapping("/pet_type")
+    List<TypeContainerDto> getPetTypeForReactTypeContainer() {
+        return reactService.findPetType();
+    }
+
+    @GetMapping("/{id}")
     public AdoptablePet one(@PathVariable Integer id) {
         return repository.findById(id).get();
     }
 
-    @PostMapping("adoptablespets")
+    @PostMapping
     public AdoptablePet newAdoptablePet(@RequestBody AdoptablePet newAdoptablePet) {
         return repository.save(newAdoptablePet);
     }
 
-    @PutMapping("adoptablespets/{id}")
+    @PutMapping("/{id}")
     public AdoptablePet replaceAdoptablePet(@RequestBody AdoptablePet newAdoptablePet, @PathVariable Integer id) {
 
         return repository.findById(id)
