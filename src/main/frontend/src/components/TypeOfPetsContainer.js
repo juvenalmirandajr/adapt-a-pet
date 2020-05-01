@@ -28,7 +28,7 @@ const TypeOfPetsContainer = props => {
 	}, [])
 
 	const listOfPets = petType.map(element => {
-		return <TypeOfPet key={element} data={element} />
+		return <TypeOfPet key={element.type} data={element} />
 	})
 
 	return (

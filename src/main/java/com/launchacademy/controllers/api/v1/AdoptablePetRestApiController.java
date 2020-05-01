@@ -3,6 +3,7 @@ package com.launchacademy.controllers.api.v1;
 import com.launchacademy.dtos.AdoptablePetDto;
 import com.launchacademy.dtos.TypeContainerDto;
 import com.launchacademy.models.AdoptablePet;
+import com.launchacademy.models.AdoptionApplication;
 import com.launchacademy.repositories.AdoptablePetRepository;
 import com.launchacademy.repositories.AdoptionApplicationRepository;
 import com.launchacademy.services.ReactService;
@@ -63,7 +64,7 @@ public class AdoptablePetRestApiController {
                     adoptablePet.setAdoptionStory(newAdoptablePet.getAdoptionStory());
                     adoptablePet.setAdoptionStatus(newAdoptablePet.getAdoptionStatus());
                     adoptablePet.setPetType(newAdoptablePet.getPetType());
-                    adoptablePet.setAdoptionApplication(newAdoptablePet.getAdoptionApplication());
+                    adoptablePet.setAdoptionApplications(newAdoptablePet.getAdoptionApplications());
                     return repository.save(adoptablePet);
                 })
                 .orElseGet(() -> {
@@ -76,8 +77,9 @@ public class AdoptablePetRestApiController {
     public void deleteAdoptablePet(@PathVariable Integer id) {
         if (repository.findById(id).isPresent()) {
             AdoptablePet adoptableDeletion = repository.findById(id).get();
-            if (adoptableDeletion.getAdoptionApplication() != null) {
-                adoptionRepository.delete(adoptableDeletion.getAdoptionApplication());
+            if (adoptableDeletion.getAdoptionApplications() != null) {
+                for (AdoptionApplication adoptionApplication : adoptableDeletion.getAdoptionApplications())
+                adoptionRepository.delete(adoptionApplication);
             }
             repository.delete(adoptableDeletion);
         }
