@@ -42,7 +42,7 @@ public class AdoptionApplication {
     @Column(name = "application_status")
     private String applicationStatus;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pet_id", nullable = false)
     @JsonIgnoreProperties("adoptionApplication")
     private AdoptablePet adoptablePet;

@@ -8,6 +8,8 @@ import org.hibernate.validator.constraints.URL;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -49,7 +51,7 @@ public class AdoptablePet {
     @JsonIgnoreProperties("adoptablePets")
     private PetType petType;
 
-    @OneToOne(mappedBy = "adoptablePet")
-    @JsonIgnoreProperties("adoptablePets")
-    private AdoptionApplication adoptionApplication;
+    @OneToMany(mappedBy = "adoptablePet", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("adoptablePet")
+    private List<AdoptionApplication> adoptionApplications = new ArrayList<>();
 }
