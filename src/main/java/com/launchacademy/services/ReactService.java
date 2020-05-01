@@ -79,5 +79,14 @@ public class ReactService {
         adoptionApplicationRepository.save(adoptionApplication);
         return applicationFormDto;
     }
+
+    public SurrenderApplicationDto newSurrenderApplication(SurrenderApplicationDto surrenderApplicationDto) {
+        SurrenderApplication surrenderApplication = mapper.surrenderApplicationDtoToSurrenderApplication(surrenderApplicationDto);
+        PetType type = petTypeRepository.findById(surrenderApplicationDto.getPet_type_id()).get();
+        surrenderApplication.setPetType(type);
+        surrenderApplicationRepository.save(surrenderApplication);
+        surrenderApplication.setId(surrenderApplication.getId());
+        return surrenderApplicationDto;
+    }
 }
 

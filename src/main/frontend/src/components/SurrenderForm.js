@@ -3,16 +3,17 @@ import { Redirect } from "react-router-dom"
 import _ from "lodash"
 import ErrorList from "./ErrorList"
 
-const SurrenderForm = props => {
+const SurrenderForm = (props) => {
   const defaultFormValues = {
     name: "",
-    phoneNumber: "",
+    phone_number: "",
     email: "",
-    petName: "",
-    petAge: "",
-    petType: "",
-    petImageUrl: "",
-    vaccinationStatus: ""
+    pet_name: "",
+    pet_age: "",
+    pet_type_id: "",
+    pet_img_url: "",
+    vaccination_status: "",
+    application_status: "Pending",
   }
 
   const [newSurrender, setNewSurrender] = useState(defaultFormValues)
@@ -20,22 +21,24 @@ const SurrenderForm = props => {
   const [submitted, setSubmitted] = useState(false)
   const [toHome, setToHome] = useState(false)
 
-  const isValidForSubmission = () => {
+  const validForSubmission = () => {
     let submitErrors = {}
     const requiredFields = [
       "name",
-      "phoneNumber",
+      "phone_number",
       "email",
-      "petName",
-      "petType",
-      "petImageUrl"
+      "pet_name",
+      "pet_age",
+      "pet_type_id",
+      "pet_img_url",
+      "vaccination_status",
     ]
 
-    requiredFields.forEach(field => {
-      if (newSurrender[field].trim() === "") {
+    requiredFields.forEach((field) => {
+      if (newSurrender[field] === "") {
         submitErrors = {
           ...submitErrors,
-          [field]: "is blank"
+          [field]: "is required",
         }
       }
     })
@@ -44,50 +47,37 @@ const SurrenderForm = props => {
     return _.isEmpty(submitErrors)
   }
 
-  const handleInputChange = event => {
+  const handleInputChange = (event) => {
     setNewSurrender({
       ...newSurrender,
-      [event.currentTarget.id]: event.currentTarget.value
+      [event.currentTarget.id]: event.currentTarget.value,
     })
   }
 
-  const addNewPet = event => {
+  const onSubmitHandler = (event) => {
     event.preventDefault()
-    if (isValidForSubmission()) {
-      fetch("/api/v1/newPet", {
-        method: "POST",
-        body: JSON.stringify(newSurrender),
-        headers: { "Content-Type": "application/json" }
-      })
-        .then(response => {
-          if (response.ok) {
-            setSubmitted(true)
-          } else {
-            let errorMessage = `${response.statues} (${response.statusText})`,
-              error = new Error(errorMessage)
-            throw error
-          }
-        })
-        .catch(error => console.error(`Error in fetch: ${error.message}`))
+    if (validForSubmission()) {
+      submitForm(newSurrender)
     }
   }
 
-  const vaccinationStatusList = ["Yes", "No"]
-  const vaccinationStatus = [""].concat(vaccinationStatusList).map(status => {
-    return (
-      <option key={status} value={status}>
-        {status}
-      </option>
-    )
-  })
-  const petTypeList = ["Guinea Pig", "Reptile"]
-  const petType = [""].concat(petTypeList).map((type, index) => {
-    return (
-      <option key={type} value={index}>
-        {type}
-      </option>
-    )
-  })
+  const submitForm = () => {
+    fetch("/api/v1/surrenderApplications", {
+      method: "POST",
+      body: JSON.stringify(newSurrender),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => {
+        if (response.ok) {
+          setSubmitted(true)
+        } else {
+          let errorMessage = `${response.status} (${response.statusText})`,
+            error = new Error(errorMessage)
+          throw error
+        }
+      })
+      .catch((error) => console.error(`Error in fetch: ${error.message}`))
+  }
 
   if (submitted === false) {
     return (
@@ -95,7 +85,7 @@ const SurrenderForm = props => {
         autoComplete="off"
         id="surrenderForm"
         className="callout form-format"
-        onSubmit={addNewPet}
+        onSubmit={onSubmitHandler}
       >
         <h1 className="header-title">Surrender a Pet</h1>
         <ErrorList errors={errors} />
@@ -111,12 +101,15 @@ const SurrenderForm = props => {
         </div>
 
         <div>
-          <label htmlFor="phoneNumber">Phone Number:</label>
+          <label htmlFor="phone_number">Phone Number:</label>
           <input
-            type="text"
-            id="phoneNumber"
-            name="phoneNumber"
-            value={newSurrender.phoneNumber}
+            type="tel"
+            id="phone_number"
+            name="phone_number"
+            pattern="^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$"
+            placeholder="333-444-5555"
+            title="333-444-5555"
+            value={newSurrender.phone_number}
             onChange={handleInputChange}
           />
         </div>
@@ -127,63 +120,70 @@ const SurrenderForm = props => {
             type="text"
             id="email"
             name="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            placeholder="someone@domain.com"
+            title="someone@domain.com"
             value={newSurrender.email}
             onChange={handleInputChange}
           />
         </div>
 
         <div>
-          <label htmlFor="petName">Pet Name:</label>
+          <label htmlFor="pet_name">Pet Name:</label>
           <input
             type="text"
-            id="petName"
-            name="petName"
-            value={newSurrender.petName}
+            id="pet_name"
+            name="pet_name"
+            value={newSurrender.pet_name}
             onChange={handleInputChange}
           />
         </div>
 
         <div>
-          <label htmlFor="petAge">Pet Age:</label>
+          <label htmlFor="pet_age">Pet Age:</label>
           <input
-            type="text"
-            id="petAge"
-            name="petAge"
-            value={newSurrender.petAge}
+            type="number"
+            id="pet_age"
+            name="pet_age"
+            value={newSurrender.pet_age}
             onChange={handleInputChange}
           />
         </div>
 
         <div>
-          <label htmlFor="petType">Pet Type:</label>
+          <label htmlFor="pet_type_id">Pet Type:</label>
           <select
-            id="petType"
+            id="pet_type_id"
             onChange={handleInputChange}
-            value={newSurrender.petType}
+            value={newSurrender.pet_type_id}
           >
-            {petType}
+            <option value=""></option>
+            <option value="1">Guinea Pig</option>
+            <option value="2">Reptile</option>
           </select>
         </div>
 
         <div>
-          <label htmlFor="petImageUrl">Image URL:</label>
+          <label htmlFor="pet_img_url">Image URL:</label>
           <input
             type="text"
-            id="petImageUrl"
-            name="petImageUrl"
-            value={newSurrender.petImageUrl}
+            id="pet_img_url"
+            name="pet_img_url"
+            value={newSurrender.pet_img_url}
             onChange={handleInputChange}
           />
         </div>
 
         <div>
-          <label htmlFor="vaccinationStatus">Vaccination Status:</label>
+          <label htmlFor="vaccination_status">Vaccination Status:</label>
           <select
-            id="vaccinationStatus"
+            id="vaccination_status"
             onChange={handleInputChange}
-            value={newSurrender.vaccinationStatus}
+            value={newSurrender.vaccination_status}
           >
-            {vaccinationStatus}
+            <option value=""></option>
+            <option value="true">Yes</option>
+            <option value="false">No</option>
           </select>
         </div>
 
@@ -199,8 +199,8 @@ const SurrenderForm = props => {
     )
   } else {
     return (
-      <div>
-        <h3 id="surrender-review">Your application is pending review.</h3>
+      <div className="callout success">
+        <h3 id="surrender-review">Your request is in process.</h3>
         <div id="hidden">
           {setTimeout(() => setToHome(true), 3000)}
           {toHome ? <Redirect to="/pets" /> : null}

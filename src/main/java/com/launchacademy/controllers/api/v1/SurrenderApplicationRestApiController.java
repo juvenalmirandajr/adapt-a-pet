@@ -1,12 +1,9 @@
 package com.launchacademy.controllers.api.v1;
 
-import com.launchacademy.dtos.AdoptionApplicationDto;
 import com.launchacademy.dtos.SurrenderApplicationDto;
 import com.launchacademy.services.ReactService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +21,10 @@ public class SurrenderApplicationRestApiController {
     @GetMapping
     List<SurrenderApplicationDto> all() {
         return reactService.findAllSurrender();
+    }
+
+    @PostMapping
+    SurrenderApplicationDto createSurrenderApplication(@RequestBody SurrenderApplicationDto surrenderApplicationDto) {
+        return reactService.newSurrenderApplication(surrenderApplicationDto);
     }
 }

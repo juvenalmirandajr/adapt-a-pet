@@ -100,9 +100,12 @@ const AdoptMeForm = (props) => {
           <div>
             <label htmlFor="phoneNumber">Phone Number:</label>
             <input
-              type="text"
+              type="tel"
               id="phoneNumber"
               name="phoneNumber"
+              pattern="^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$"
+              placeholder="333-444-5555"
+              title="333-444-5555"
               value={newApplication.phoneNumber}
               onChange={handleInputChange}
             />
@@ -114,6 +117,9 @@ const AdoptMeForm = (props) => {
               type="text"
               id="email"
               name="email"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+              placeholder="someone@domain.com"
+              title="someone@domain.com"
               value={newApplication.email}
               onChange={handleInputChange}
             />
@@ -141,7 +147,7 @@ const AdoptMeForm = (props) => {
       )
     } else {
       return (
-        <div class="callout secondary">
+        <div className="callout secondary">
           <h3 id="surrender-review">Your application now is pending review.</h3>
         </div>
       )

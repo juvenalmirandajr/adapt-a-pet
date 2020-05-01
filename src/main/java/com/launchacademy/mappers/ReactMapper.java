@@ -86,5 +86,18 @@ public interface ReactMapper {
     }
 
     List<AdoptionApplication> adoptionApplicationFormDtosToAdoptionApplications(List<AdoptionApplicationFormDto> all);
+
+   default SurrenderApplication surrenderApplicationDtoToSurrenderApplication(SurrenderApplicationDto surrenderApplicationDto){
+       SurrenderApplication surrender = new SurrenderApplication();
+       surrender.setName(surrenderApplicationDto.getName());
+       surrender.setPhoneNumber(surrenderApplicationDto.getPhone_number());
+       surrender.setEmail(surrenderApplicationDto.getEmail());
+       surrender.setPetName(surrenderApplicationDto.getPet_name());
+       surrender.setPetAge(surrenderApplicationDto.getPet_age());
+       surrender.setImgUrl(surrenderApplicationDto.getPet_img_url());
+       surrender.setVaccinationStatus(surrenderApplicationDto.getVaccination_status());
+       surrender.setApplicationStatus(surrenderApplicationDto.getApplication_status());
+       return surrender;
+   }
 }
 
