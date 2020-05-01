@@ -5,10 +5,10 @@ import ErrorList from "./ErrorList"
 const AdoptMeForm = props => {
   const defaultFormValue = {
     name: "",
-    phoneNumber: "",
+    phone_number: "",
     email: "",
-    homeStatus: "",
-    applicationStatus: "Pending",
+    home_status: "",
+    application_status: "Pending",
     petId: `${props.petId}`
   }
 
@@ -19,13 +19,13 @@ const AdoptMeForm = props => {
 
   const validForSubmission = () => {
     let submitErrors = {}
-    const requiredFields = ["name", "phoneNumber", "email", "homeStatus"]
+    const requiredFields = ["name", "phone_number", "email", "home_status"]
 
     requiredFields.forEach(field => {
-      if (newApplication[field].trim() === "") {
+      if (newApplication[field] === "") {
         submitErrors = {
           ...submitErrors,
-          [field]: "is blank"
+          [field]: "is required"
         }
       }
     })
@@ -51,7 +51,7 @@ const AdoptMeForm = props => {
   const submitForm = event => {
     event.preventDefault()
     if (validForSubmission()) {
-      fetch("/api/v1/adoptionApplication", {
+      fetch("/api/v1/adoptionApplications", {
         method: "POST",
         body: JSON.stringify(newApplication),
         headers: { "Content-Type": "application/json" }
@@ -102,11 +102,11 @@ const AdoptMeForm = props => {
           </div>
 
           <div>
-            <label htmlFor="phoneNumber">Phone Number:</label>
+            <label htmlFor="phone_number">Phone Number:</label>
             <input
               type="text"
-              id="phoneNumber"
-              name="phoneNumber"
+              id="phone_number"
+              name="phone_number"
               value={newApplication.phoneNumber}
               onChange={handleInputChange}
             />
@@ -124,9 +124,9 @@ const AdoptMeForm = props => {
           </div>
 
           <div>
-            <label htmlFor="homeStatus">Home Status:</label>
+            <label htmlFor="home_status">Home Status:</label>
             <select
-              id="homeStatus"
+              id="home_status"
               onChange={handleInputChange}
               value={newApplication.homeStatus}
             >
@@ -136,8 +136,8 @@ const AdoptMeForm = props => {
 
           <input
             type="hidden"
-            name="applicationStatus"
-            id="applicationStatus"
+            name="application_status"
+            id="application_status"
             value="Pending"
           />
 
