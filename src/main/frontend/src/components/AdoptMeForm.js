@@ -2,14 +2,14 @@ import React, { useState } from "react"
 import _ from "lodash"
 import ErrorList from "./ErrorList"
 
-const AdoptMeForm = props => {
+const AdoptMeForm = (props) => {
   const defaultFormValue = {
     name: "",
-    phone_number: "",
+    phoneNumber: "",
     email: "",
-    home_status: "",
-    application_status: "Pending",
-    petId: `${props.petId}`
+    homeStatus: "",
+    applicationStatus: "Pending",
+    petId: `${props.petId}`,
   }
 
   const [newApplication, setNewApplication] = useState(defaultFormValue)
@@ -19,13 +19,13 @@ const AdoptMeForm = props => {
 
   const validForSubmission = () => {
     let submitErrors = {}
-    const requiredFields = ["name", "phone_number", "email", "home_status"]
+    const requiredFields = ["name", "phoneNumber", "email", "homeStatus"]
 
-    requiredFields.forEach(field => {
+    requiredFields.forEach((field) => {
       if (newApplication[field] === "") {
         submitErrors = {
           ...submitErrors,
-          [field]: "is required"
+          [field]: "is required",
         }
       }
     })
@@ -34,44 +34,40 @@ const AdoptMeForm = props => {
     return _.isEmpty(submitErrors)
   }
 
-  const handleInputChange = event => {
+  const handleInputChange = (event) => {
     setNewApplication({
       ...newApplication,
-      [event.currentTarget.id]: event.currentTarget.value
+      [event.currentTarget.id]: event.currentTarget.value,
     })
   }
 
-  const onSubmitHandler = event => {
+  const onSubmitHandler = (event) => {
     event.preventDefault()
     if (validForSubmission()) {
       submitForm(newApplication)
     }
   }
 
-  const submitForm = event => {
-    event.preventDefault()
-    if (validForSubmission()) {
-      fetch("/api/v1/adoptionApplications", {
-        method: "POST",
-        body: JSON.stringify(newApplication),
-        headers: { "Content-Type": "application/json" }
+  const submitForm = () => {
+    fetch("/api/v1/adoptionApplications", {
+      method: "POST",
+      body: JSON.stringify(newApplication),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => {
+        if (response.ok) {
+          setSubmitted(true)
+        } else {
+          let errorMessage = `${response.status} (${response.statusText})`,
+            error = new Error(errorMessage)
+          throw error
+        }
       })
-        .then(response => {
-          console.log(response)
-          if (response.ok) {
-            setSubmitted(true)
-          } else {
-            let errorMessage = `${response.statues} (${response.statusText})`,
-              error = new Error(errorMessage)
-            throw error
-          }
-        })
-        .catch(error => console.error(`Error in fetch: ${error.message}`))
-    }
+      .catch((error) => console.error(`Error in fetch: ${error.message}`))
   }
 
   const homeList = ["Own", "Rent"]
-  const homeStatus = [""].concat(homeList).map(status => {
+  const homeStatus = [""].concat(homeList).map((status) => {
     return (
       <option key={status} value={status}>
         {status}
@@ -86,7 +82,7 @@ const AdoptMeForm = props => {
           autoComplete="off"
           id="adoptMeForm"
           className="callout form-format"
-          onSubmit={submitForm}
+          onSubmit={onSubmitHandler}
         >
           <h1 className="header-title">Adopt Me!</h1>
           <ErrorList errors={errors} />
@@ -102,11 +98,11 @@ const AdoptMeForm = props => {
           </div>
 
           <div>
-            <label htmlFor="phone_number">Phone Number:</label>
+            <label htmlFor="phoneNumber">Phone Number:</label>
             <input
               type="text"
-              id="phone_number"
-              name="phone_number"
+              id="phoneNumber"
+              name="phoneNumber"
               value={newApplication.phoneNumber}
               onChange={handleInputChange}
             />
@@ -124,30 +120,31 @@ const AdoptMeForm = props => {
           </div>
 
           <div>
-            <label htmlFor="home_status">Home Status:</label>
+            <label htmlFor="homeStatus">Home Status:</label>
             <select
-              id="home_status"
+              id="homeStatus"
               onChange={handleInputChange}
               value={newApplication.homeStatus}
             >
               {homeStatus}
             </select>
           </div>
-
           <input
             type="hidden"
-            name="application_status"
-            id="application_status"
+            name="applicationStatus"
+            id="applicationStatus"
             value="Pending"
           />
-
           <input type="hidden" name="petId" id="petId" value={props.petId} />
-
           <input type="submit" className="button" value="submit" />
         </form>
       )
     } else {
-      return <h3 id="surrender-review">Your application is pending review.</h3>
+      return (
+        <div class="callout secondary">
+          <h3 id="surrender-review">Your application now is pending review.</h3>
+        </div>
+      )
     }
   } else {
     return ""
