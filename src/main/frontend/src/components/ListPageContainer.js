@@ -6,7 +6,7 @@ const ListPageContainer = props => {
   let petType = props.petType
 
   useEffect(() => {
-    fetch(`/api/v1/${petType}`)
+    fetch(`/api/v1/pets/type/${petType}`)
       .then(response => {
         if (response.ok) {
           return response
@@ -28,7 +28,7 @@ const ListPageContainer = props => {
   }, [])
 
   const TypeOfPets = lists.map(element => {
-    return <ListPage key={element.id} data={element} />
+    return <ListPage key={element.id} data={element} petType={petType} />
   })
 
   return (

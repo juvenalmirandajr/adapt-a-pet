@@ -23,10 +23,10 @@ const App = props => {
                   <Link to="/pets">Home</Link>
                 </li>
                 <li>
-                  <Link to="/guineapigs">Guinea Pigs</Link>
+                  <Link to="/pets/guineapigs">Guinea Pigs</Link>
                 </li>
                 <li>
-                  <Link to="/reptiles">Reptiles</Link>
+                  <Link to="/pets/reptiles">Reptiles</Link>
                 </li>
                 <li>
                   <Link to="/adoptions/new">Put up for Adoption</Link>
@@ -42,18 +42,18 @@ const App = props => {
       <div className="bottom">
         <Switch>
           <Route exact path="/pets" component={TypeOfPetsContainer} />
-          <Route exact path="/guineapigs" key={"gp"}>
+          <Route exact path="/pets/guineapigs" key={"gp"}>
             <ListPageContainer
               petType={"guinea pig"}
               petTypeName={"Guinea Pigs"}
             />
           </Route>
-          <Route exact path="/reptiles" key={"lz"}>
+          <Route exact path="/pets/reptiles" key={"lz"}>
             <ListPageContainer petType={"reptile"} petTypeName={"Reptiles"} />
           </Route>
           <Route exact path="/adoptions/new" component={SurrenderForm} />
           <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/pets/:id" component={ShowPage} />
+          <Route exact path="/pets/:animalType/:id" component={ShowPage} />
         </Switch>
       </div>
     </BrowserRouter>

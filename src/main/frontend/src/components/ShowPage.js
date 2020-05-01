@@ -4,6 +4,7 @@ import AnimalInfo from "./AnimalInfo"
 const ShowPage = props => {
 	const [pet, setPet] = useState({})
 	const petId = props.match.params.id
+	const animalType = props.match.params.animalType
 
 	useEffect(() => {
 		fetch(`/api/v1/pets/${petId}`)

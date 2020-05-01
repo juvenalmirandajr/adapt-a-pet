@@ -6,7 +6,7 @@ const TypeOfPetsContainer = props => {
 	const [petType, setPetType] = useState([])
 
 	useEffect(() => {
-		fetch("/api/v1/pet_type")
+		fetch("/api/v1/pets/pet_type")
 			.then(response => {
 				if (response.ok) {
 					return response
@@ -28,7 +28,7 @@ const TypeOfPetsContainer = props => {
 	}, [])
 
 	const listOfPets = petType.map(element => {
-		return <TypeOfPet data={element} />
+		return <TypeOfPet key={element} data={element} />
 	})
 
 	return (

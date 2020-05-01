@@ -28,7 +28,7 @@ const PendingAppList = props => {
       status: event.currentTarget.value,
       id: event.currentTarget.id
     }
-
+    console.log(JSON.stringify(approvalStatus))
     fetch("/api/v1/approvalStatus", {
       method: "POST",
       body: JSON.stringify(approvalStatus),

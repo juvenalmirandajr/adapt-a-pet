@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 
 const TypeOfPet = props => {
   const { type, description, img_url } = props.data
-  const path = '/' + type.split(' ').join(''). trim() + 's'
+  const path = '/pets/' + type.split(' ').join(''). trim() + 's'
 
   return (
     <div className="featured-image-block medium-6 column">
