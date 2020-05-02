@@ -2,8 +2,10 @@ package com.launchacademy.controllers.api.v1;
 
 import com.launchacademy.dtos.AdoptablePetDto;
 import com.launchacademy.dtos.TypeContainerDto;
+import com.launchacademy.models.Admin;
 import com.launchacademy.models.AdoptablePet;
 import com.launchacademy.models.AdoptionApplication;
+import com.launchacademy.repositories.AdminRepository;
 import com.launchacademy.repositories.AdoptablePetRepository;
 import com.launchacademy.repositories.AdoptionApplicationRepository;
 import com.launchacademy.services.ReactService;
@@ -17,12 +19,14 @@ import java.util.List;
 public class AdoptablePetRestApiController {
     private final AdoptablePetRepository repository;
     private final AdoptionApplicationRepository adoptionRepository;
+    private final AdminRepository adminRepo;
     private final ReactService reactService;
 
     @Autowired
-    public AdoptablePetRestApiController(AdoptablePetRepository repository, AdoptionApplicationRepository adoptionRepository, ReactService reactService) {
+    public AdoptablePetRestApiController(AdoptablePetRepository repository, AdoptionApplicationRepository adoptionRepository, AdminRepository adminRepo, ReactService reactService) {
         this.repository = repository;
         this.adoptionRepository = adoptionRepository;
+        this.adminRepo = adminRepo;
         this.reactService = reactService;
     }
 
@@ -45,6 +49,11 @@ public class AdoptablePetRestApiController {
     @GetMapping("/{id}")
     public AdoptablePetDto one(@PathVariable Integer id) {
         return reactService.findById(id);
+    }
+
+    @PostMapping("/login")
+    public Admin login(@RequestBody Admin admin) {
+        return adminRepo.findByPassword(admin.getPassword());
     }
 
     @PostMapping
