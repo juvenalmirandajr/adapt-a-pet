@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class AdoptionApplicationFormDto {
+    private Integer id;
     private String name;
     private String phoneNumber;
     private String email;

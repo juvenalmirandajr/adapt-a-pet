@@ -24,12 +24,18 @@ const PendingAppList = props => {
 
   const updateStatus = event => {
     event.preventDefault()
+
     const approvalStatus = {
-      status: event.currentTarget.value,
-      id: event.currentTarget.id
+      id: event.currentTarget.id,
+      name: person_name,
+      phoneNumber: phone_number,
+      email: email,
+      homeStatus: home_status,
+      applicationStatus: event.currentTarget.value,
+      petId: id
     }
     console.log(JSON.stringify(approvalStatus))
-    fetch("/api/v1/approvalStatus", {
+    fetch("/api/v1/adoptionApplications", {
       method: "POST",
       body: JSON.stringify(approvalStatus),
       headers: { "Content-Type": "application/json" }
@@ -44,8 +50,8 @@ const PendingAppList = props => {
         }
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`))
-    alert("Form " + event.currentTarget.value)
-    window.location.href = "http://localhost:3000/pets"
+    // alert("Form " + event.currentTarget.value)
+    // window.location.href = "http://localhost:8080/pets"
   }
 
   return (
