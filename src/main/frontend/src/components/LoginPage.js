@@ -104,8 +104,9 @@ const LoginPage = props => {
         <div className="modal-content">
           <img
             className="image-resized"
-            src="https://cdn2.iconfinder.com/data/icons/animal-vivid-volume-1/256/Chameleon-512.png"
-            alt=""
+            // src="https://cdn2.iconfinder.com/data/icons/animal-vivid-volume-1/256/Chameleon-512.png"
+            src="../images/login-chameleon.webp"
+            alt="login chameleon image"
           />
           <h4 id="hero-section-text">Login Admin</h4>
           <div className="alert-box">
