@@ -20,7 +20,7 @@ const LoginPage = props => {
     }
 
     if (isValidForSubmission()) {
-      fetch("/api/v1/login", {
+      fetch("/api/v1/pets/login", {
         method: "POST",
         body: JSON.stringify(loginInfo),
         headers: { "Content-Type": "application/json" }
@@ -36,7 +36,7 @@ const LoginPage = props => {
         })
         .then(data => {
           let submitErrors
-          if (data.rows.length !== 0) {
+          if (data.username === userName) {
             setDisplay("bg-hide")
           } else {
             submitErrors = {
